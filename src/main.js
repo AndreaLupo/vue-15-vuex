@@ -28,6 +28,7 @@ const store = createStore({
             }, 1000);
         },
         increase(context, payload) {
+            console.log(context);
             context.commit('increase', payload);
         }
     },
