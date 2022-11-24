@@ -1,5 +1,5 @@
 <template>
-  <h3>{{counter}}</h3>
+  <h3>TheCounter: {{finalCounter}}</h3>
 </template>
 
 <script>
