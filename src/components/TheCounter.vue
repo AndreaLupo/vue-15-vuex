@@ -10,7 +10,7 @@ export default {
             return this.$store.getters.finalCounter;
 
         }, */
-        ...mapGetters(['final-counter'])
+        ...mapGetters('numbers' ,['final-counter'])
     }
 }
 </script>

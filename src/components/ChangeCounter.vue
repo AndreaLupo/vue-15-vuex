@@ -12,7 +12,7 @@ export default {
             // this.$store.dispatch('increment');
             this.increase({value:11});
         },
-        ...mapActions(['increment', 'increase'])
+        ...mapActions('numbers', ['increment', 'increase'])
 
     }
 }

@@ -2,11 +2,12 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import { createStore } from 'vuex';
 
-const store = createStore({
+const counterModule = {
+    namespaced: true,
     state() {
         return {
-            counter: 0
-        };
+            counter: 5
+        }
     },
     mutations: {
         increment(state) {
@@ -14,15 +15,16 @@ const store = createStore({
         },
         /** payload is custom, can be anything */
         increase(state, payload) {
+            console.log(state);
             state.counter = state.counter + payload.value;
-        }
+        },
     },
     actions: {
         /**
          * Can use asynchrounous code here!
          * @param {*} context 
          */
-        increment(context) {
+         increment(context) {
             setTimeout(function() {
                 context.commit('increment');
             }, 1000);
@@ -30,7 +32,7 @@ const store = createStore({
         increase(context, payload) {
             console.log(context);
             context.commit('increase', payload);
-        }
+        },
     },
     getters: {
         finalCounter(state) {
@@ -45,6 +47,39 @@ const store = createStore({
                 return 100;
             }
             return finalCounter;
+        },
+        testAuth(state, getters, rootState, rootGetters) {
+            console.log(state, getters,rootState, rootGetters);
+            return rootState.isLoggedIn;
+        }
+    }
+};
+
+const store = createStore({
+    modules: {
+        numbers: counterModule
+    },
+    state() {
+        return {
+            isLoggedIn: false
+        };
+    },
+    mutations: {
+        setAuth(state, payload) {
+            state.isLoggedIn = payload.isAuth;
+        }
+    },
+    actions: {
+        login(context) {
+            context.commit('setAuth', {isAuth: true});
+        },
+        logout(context) {
+            context.commit('setAuth', {isAuth: false});
+        }
+    },
+    getters: {
+        userIsAuthenticated(state) {
+            return state.isLoggedIn;
         }
     }
 });
